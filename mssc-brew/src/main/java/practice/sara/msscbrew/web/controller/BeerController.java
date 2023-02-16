@@ -10,6 +10,7 @@ import practice.sara.msscbrew.web.model.BeerDto;
 
 import java.util.UUID;
 
+@Deprecated
 @RequestMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, value = "/api/v1/beer")
 @RestController
 public class BeerController {
