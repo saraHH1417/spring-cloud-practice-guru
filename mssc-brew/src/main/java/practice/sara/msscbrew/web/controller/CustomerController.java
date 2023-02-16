@@ -24,5 +24,23 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.getCustomerById(customerId), HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity<CustomerDto> saveCustomer(@RequestBody CustomerDto customerDto) {
+        CustomerDto savedCustomer = customerService.save(customerDto);
+        return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{beerId}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("beerId") UUID beerId,
+                                                      @RequestBody CustomerDto customerDto) {
+        customerService.update(beerId, customerDto);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @DeleteMapping("/{beerId}")
+    public void deleteCustomer(@PathVariable("beerId") UUID beerId) {
+        customerService.delete(beerId);
+    }
 
 }

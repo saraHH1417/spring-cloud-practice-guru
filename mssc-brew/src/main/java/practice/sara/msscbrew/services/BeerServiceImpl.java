@@ -1,10 +1,12 @@
 package practice.sara.msscbrew.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import practice.sara.msscbrew.web.model.BeerDto;
 
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class BeerServiceImpl implements BeerService{
     @Override
@@ -26,5 +28,11 @@ public class BeerServiceImpl implements BeerService{
     @Override
     public void update(UUID uuid, BeerDto beerDto) {
         // TODO: implement this
+    }
+
+    @Override
+    public void deleteById(UUID beerId) {
+        log.debug("Deleting a beer....");
+
     }
 }

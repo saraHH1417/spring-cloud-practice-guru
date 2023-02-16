@@ -2,15 +2,15 @@ package practice.sara.msscbrew.web.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.web.bind.annotation.*;
 import practice.sara.msscbrew.services.BeerService;
 import practice.sara.msscbrew.web.model.BeerDto;
 
 import java.util.UUID;
 
-@RequestMapping("/api/v1/beer")
+@RequestMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, value = "/api/v1/beer")
 @RestController
 public class BeerController {
     private final BeerService beerService;
@@ -19,13 +19,13 @@ public class BeerController {
         this.beerService = beerService;
     }
 
-    @GetMapping("/{beedrId}")
-    public ResponseEntity<BeerDto> getBeer(@PathVariable("beerId")UUID beerId) {
+    @GetMapping("/{beerId}")
+    public ResponseEntity<BeerDto> getBeer(@PathVariable("beerId") UUID beerId) {
         return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<BeerDto> createBeer(BeerDto beerDto) {
+    public ResponseEntity<BeerDto> createBeer(@RequestBody BeerDto beerDto) {
         BeerDto savedDto = beerService.saveNewBeer(beerDto);
 
         HttpHeaders headers = new HttpHeaders();
@@ -36,8 +36,14 @@ public class BeerController {
 
 
     @PutMapping("/{beerId}")
-    public ResponseEntity<BeerDto> updateCustomer(@PathVariable("beerId") UUID uuid, BeerDto beerDto) {
+    public ResponseEntity<BeerDto> updateCustomer(@PathVariable("beerId") UUID uuid,@RequestBody BeerDto beerDto) {
         beerService.update(uuid, beerDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{beerId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBeer(@PathVariable("beerId") UUID beerId) {
+        beerService.deleteById(beerId);
     }
 }
