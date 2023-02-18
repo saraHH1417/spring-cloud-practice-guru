@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.context.annotation.Primary;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
