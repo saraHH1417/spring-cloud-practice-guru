@@ -1,5 +1,6 @@
 package practice.sara.msscbrew.web.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import practice.sara.msscbrew.web.model.CustomerDto;
 
 import java.util.UUID;
 
-@RequestMapping("/api/v1/customer")
+@RequestMapping("/api/v1/customer/")
 @RestController
 public class CustomerController {
 
@@ -27,7 +28,10 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<CustomerDto> saveCustomer(@RequestBody CustomerDto customerDto) {
         CustomerDto savedCustomer = customerService.save(customerDto);
-        return new ResponseEntity<>(savedCustomer, HttpStatus.CREATED);
+        HttpHeaders headers = new HttpHeaders();
+        // TODO: add hostname to url
+        headers.add("Location", "/api/v1/customer/" + savedCustomer.getId().toString());
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @PutMapping("/{beerId}")
